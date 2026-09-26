@@ -3,15 +3,17 @@ import 'package:get/get.dart';
 
 class SplashController extends GetxController {
   var loading = false.obs;
+
   @override
   void onInit(){
     super.onInit();
+    checkLogin();
   }
+
   checkLogin() async{
     loading.value = true;
     await Future.delayed(Duration(seconds: 2));
     loading.value = false;
     Get.offNamed(AppRouteName.login);
   }
-
 }
