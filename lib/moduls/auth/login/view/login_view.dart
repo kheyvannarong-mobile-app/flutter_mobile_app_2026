@@ -4,6 +4,8 @@ import 'package:flutter_mobile_app_2026/moduls/auth/login/conttroller/login_cont
 import 'package:flutter_mobile_app_2026/widgets/button_custom_widget.dart';
 import 'package:flutter_mobile_app_2026/widgets/input_custom_widget.dart';
 
+import '../../../../routes/app_route_name.dart';
+
 class LoginView extends GetView<LoginController> {
   const LoginView({super.key});
 
@@ -46,12 +48,39 @@ class LoginView extends GetView<LoginController> {
             const SizedBox(height: 32),
 
             // ៣. ប៊ូតុង Login (រុំជាមួយ Obx ដើម្បីឲ្យដំណើរការមុខងារ Loading)
+            // ៣. ប៊ូតុង Login (កូដចាស់)
             Obx(() => ButtonCustomWidget(
               label: "Login",
               backgroundColor: Colors.cyan,
               onPressed: controller.onLogin,
               loading: controller.loading.value,
             )),
+
+            // ៤. បន្ថែមប៊ូតុងសម្រាប់ទៅកាន់ទំព័រ Register នៅត្រង់នេះ!
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "Don't have an account? ",
+                  style: TextStyle(color: Colors.grey),
+                ),
+                TextButton(
+                  onPressed: () {
+                    // បញ្ជាឲ្យលោតទៅកាន់ទំព័រ Register
+                    Get.toNamed(AppRouteName.register);
+                  },
+                  child: const Text(
+                    "Register Now",
+                    style: TextStyle(
+                      color: Colors.cyan,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

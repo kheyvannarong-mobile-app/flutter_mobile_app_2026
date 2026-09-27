@@ -1,6 +1,7 @@
 import 'package:flutter_mobile_app_2026/core/remote/models/login/Login_request.dart';
 import 'package:flutter_mobile_app_2026/core/remote/services/api_service.dart';
 
+import '../../../core/remote/models/register/Register_request.dart';
 import 'auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -19,5 +20,9 @@ class AuthRepositoryImpl implements AuthRepository {
     } else {
       return false;
     }
+  }
+  @override
+  Future<bool> register(RegisterRequest request) async {
+    return await apiService.register(request);
   }
 }

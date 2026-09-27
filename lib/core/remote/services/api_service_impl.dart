@@ -6,6 +6,7 @@ import 'package:flutter_mobile_app_2026/core/remote/services/api_service.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../constants/constant_uri.dart';
+import '../models/register/Register_request.dart';
 
 class ApiServiceImpl implements ApiService {
   var headers = {"Content-Type": "application/json"};
@@ -36,5 +37,25 @@ class ApiServiceImpl implements ApiService {
     }
 
     return loginResponse;
+  }
+  @override
+  Future<bool> register(RegisterRequest request) async {
+    var url = Uri.parse(ConstantUri.registerPath); // ត្រូវប្រាកដថាមាន registerPath ក្នុង constant_uri.dart
+    try {
+      var response = await http.post(
+        url,
+        body: jsonEncode(request.toJson()),
+        headers: headers,
+      );
+      print("Register Status: ${response.statusCode}");
+      print("Register Response: ${response.body}");
+
+      if (response.statusCode == 200) {
+        return true; // បង្កើតជោគជ័យ
+      }
+    } catch (e) {
+      print("Register API Error: $e");
+    }
+    return false;
   }
 }
