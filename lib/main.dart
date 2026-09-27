@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Mobile App',
       theme: ThemeData(
 
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: .fromSeed(seedColor: Colors.cyan),
       ),
       initialRoute: AppRouteName.splash,
       getPages: AppRoutes.getAllRoutes(),
