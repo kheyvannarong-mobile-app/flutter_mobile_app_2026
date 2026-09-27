@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobile_app_2026/binding/initial_binding.dart';
 import 'package:flutter_mobile_app_2026/routes/app_route_name.dart';
 import 'package:flutter_mobile_app_2026/routes/app_routes.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
+Future<void> main() async {
+  await GetStorage.init();
+
   runApp(const MyApp());
 }
 
@@ -23,6 +27,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: AppRouteName.splash,
       getPages: AppRoutes.getAllRoutes(),
+      initialBinding: InitialBinding(),
     );
   }
 }

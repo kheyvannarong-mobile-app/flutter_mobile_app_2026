@@ -9,9 +9,10 @@ class LoginView extends GetView<LoginController> {
   @override
  Widget build(BuildContext context){
    return Scaffold(
+     backgroundColor: Colors.white,
      appBar: AppBar(
        backgroundColor: Colors.cyan ,
-       title:Text("Home", style: TextStyle(color: Colors.white)),
+       title:Text("Login", style: TextStyle(color: Colors.white)),
      ),
    );
  }
