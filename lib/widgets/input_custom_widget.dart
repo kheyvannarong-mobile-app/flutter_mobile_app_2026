@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobile_app_2026/constants/app_colors.dart';
 
 class InputCustomWidgets extends StatefulWidget {
   final String? labelText;
@@ -6,7 +7,7 @@ class InputCustomWidgets extends StatefulWidget {
   final String? errorValidate;
   final TextEditingController? controller;
   final Widget? prefixIcon;
-  final bool isPassword; // បន្ថែមអថេរនេះដើម្បីប្រាប់ថាជាប្រអប់ Password
+  final bool isPassword;
 
   const InputCustomWidgets({
     super.key,
@@ -15,7 +16,7 @@ class InputCustomWidgets extends StatefulWidget {
     this.errorValidate,
     this.controller,
     this.prefixIcon,
-    this.isPassword = false, // លំនាំដើមគឺមិនមែន Password ទេ
+    this.isPassword = false,
   });
 
   @override
@@ -28,7 +29,6 @@ class _InputCustomWidgetsState extends State<InputCustomWidgets> {
   @override
   void initState() {
     super.initState();
-    // ប្រសិនបើវាជាប្រអប់ Password នោះឲ្យវាលាក់អក្សរពីដំបូង
     _obscureText = widget.isPassword;
   }
 
@@ -37,6 +37,7 @@ class _InputCustomWidgetsState extends State<InputCustomWidgets> {
     return TextFormField(
       controller: widget.controller,
       obscureText: _obscureText,
+      style: const TextStyle(color: AppColors.textPrimary, fontSize: 15),
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.next,
       validator: (value) {
@@ -48,46 +49,45 @@ class _InputCustomWidgetsState extends State<InputCustomWidgets> {
       decoration: InputDecoration(
         hintText: widget.hintText,
         labelText: widget.labelText,
-        labelStyle: TextStyle(
-          color: Colors.grey[700],
+        labelStyle: const TextStyle(
+          color: AppColors.textSecondary,
           fontWeight: FontWeight.w500,
+          fontSize: 14,
         ),
-        hintStyle: TextStyle(color: Colors.grey[400]),
-        prefixIcon: widget.prefixIcon ?? const Icon(Icons.person_outline, color: Colors.cyan),
-
-        // ត្រង់នេះជាអ្នកកំណត់រូបភ្នែក និងដំណើរការចុចបិទ/បើក
+        hintStyle: const TextStyle(color: AppColors.textMuted, fontSize: 14),
+        prefixIcon: widget.prefixIcon ?? const Icon(Icons.person_outline_rounded, color: AppColors.primary),
         suffixIcon: widget.isPassword
             ? IconButton(
-          icon: Icon(
-            _obscureText ? Icons.visibility_off : Icons.visibility,
-            color: Colors.grey,
-          ),
-          onPressed: () {
-            setState(() {
-              _obscureText = !_obscureText; // ឆ្លាស់គ្នាពី ពិត ទៅ មិនពិត
-            });
-          },
-        )
-            : null, // បើមិនមែន Password ទេ មិនបាច់បង្ហាញរូបភ្នែកឡើយ
-
+                icon: Icon(
+                  _obscureText ? Icons.visibility_off_rounded : Icons.visibility_rounded,
+                  color: AppColors.textMuted,
+                  size: 20,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _obscureText = !_obscureText;
+                  });
+                },
+              )
+            : null,
         filled: true,
-        fillColor: Colors.grey[50],
+        fillColor: AppColors.surfaceVariant,
         contentPadding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: BorderSide(color: Colors.grey.shade300, width: 1.5),
+          borderRadius: BorderRadius.circular(16.0),
+          borderSide: const BorderSide(color: AppColors.border, width: 1.2),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(color: Colors.cyan, width: 2.0),
+          borderRadius: BorderRadius.circular(16.0),
+          borderSide: const BorderSide(color: AppColors.primary, width: 1.8),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(color: Colors.redAccent, width: 1.5),
+          borderRadius: BorderRadius.circular(16.0),
+          borderSide: const BorderSide(color: AppColors.error, width: 1.2),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(color: Colors.redAccent, width: 2.0),
+          borderRadius: BorderRadius.circular(16.0),
+          borderSide: const BorderSide(color: AppColors.error, width: 1.8),
         ),
       ),
     );

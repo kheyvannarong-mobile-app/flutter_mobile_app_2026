@@ -11,11 +11,12 @@ class SplashController extends GetxController {
     checkLogin();
   }
 
-  checkLogin() async {
+  Future<void> checkLogin() async {
     loading.value = true;
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
     loading.value = false;
-    if (UserAccessToken.getAccessToken() == "") {
+
+    if (UserAccessToken.getAccessToken().isEmpty) {
       Get.offNamed(AppRouteName.login);
     } else {
       Get.offNamed(AppRouteName.home);

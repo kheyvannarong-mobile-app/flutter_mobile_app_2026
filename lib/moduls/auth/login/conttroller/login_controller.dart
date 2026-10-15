@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 class LoginController extends GetxController {
   final AuthRepository authRepository;
 
-  // ១. ដក .obs ចេញពី TextEditingController
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   var loading = false.obs;
@@ -15,45 +14,68 @@ class LoginController extends GetxController {
 
   @override
   void onClose() {
-    // ត្រូវមានការ dispose ដើម្បីសន្សំសំចៃ Memory ពេលបិទទំព័រ Login
     usernameController.dispose();
     passwordController.dispose();
     super.onClose();
   }
 
-  onLogin() async {
-    // ២. ទាញយកអក្សរដោយផ្ទាល់ (លែងប្រើ .value)
-    String username = usernameController.text.trim();
-    String password = passwordController.text.trim();
+  Future<void> onLogin() async {
+    final String username = usernameController.text.trim();
+    final String password = passwordController.text.trim();
 
     if (username.isEmpty) {
-      Get.snackbar("Error", "Username is required");
+      Get.snackbar(
+        "Validation Error",
+        "Phone number or username is required",
+        backgroundColor: Colors.red.shade100,
+        colorText: Colors.red.shade900,
+      );
       return;
     }
     if (password.isEmpty) {
-      Get.snackbar("Error", "Password is required");
+      Get.snackbar(
+        "Validation Error",
+        "Password is required",
+        backgroundColor: Colors.red.shade100,
+        colorText: Colors.red.shade900,
+      );
       return;
     }
 
     loading.value = true;
 
-    // ៣. បន្ថែម Try-Catch ដើម្បីចាប់មើលថា Error ដោយសារអ្វីពិតប្រាកដ
     try {
-      var loginResponse = await authRepository.login(
+      final success = await authRepository.login(
         username: username,
         password: password,
       );
 
-      if (loginResponse == true) {
-        Get.offNamed(AppRouteName.home);
+      if (success) {
+        Get.snackbar(
+          "Welcome",
+          "Login successful!",
+          backgroundColor: Colors.green.shade100,
+          colorText: Colors.green.shade900,
+          duration: const Duration(seconds: 2),
+        );
+        Get.offAllNamed(AppRouteName.home);
       } else {
-        Get.snackbar("Error", "Your username and password are incorrect!");
+        Get.snackbar(
+          "Login Failed",
+          "Invalid phone number or password. Please try again.",
+          backgroundColor: Colors.red.shade100,
+          colorText: Colors.red.shade900,
+        );
       }
     } catch (e) {
-      Get.snackbar("Server Error", "មិនអាចភ្ជាប់ទៅកាន់ API បានទេ");
-      print("========== ចាប់បាន Error: $e ==========");
+      Get.snackbar(
+        "Connection Error",
+        "Could not connect to API server: $e",
+        backgroundColor: Colors.red.shade100,
+        colorText: Colors.red.shade900,
+      );
     } finally {
-      loading.value = false; // បញ្ឈប់ការវិល Loading មិនថាមុនឬខុស
+      loading.value = false;
     }
   }
 }

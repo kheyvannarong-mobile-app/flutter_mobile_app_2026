@@ -1,47 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobile_app_2026/constants/app_colors.dart';
 
 class ButtonCustomWidget extends StatelessWidget {
   final VoidCallback? onPressed;
   final String? label;
   final Color? backgroundColor;
+  final Color? textColor;
   final bool loading;
+  final IconData? icon;
 
   const ButtonCustomWidget({
     super.key,
     this.onPressed,
     this.label,
     this.backgroundColor,
-    this.loading = false, // បញ្ចូល loading មកក្នុង Constructor
+    this.textColor,
+    this.loading = false,
+    this.icon,
   });
 
   @override
   Widget build(BuildContext context) {
+    final effectiveBg = backgroundColor ?? AppColors.primary;
+    final effectiveFg = textColor ?? (effectiveBg == AppColors.primary ? AppColors.textDark : Colors.white);
+
     return ElevatedButton(
-      // បើកំពុង loading ប៊ូតុងមិនឲ្យចុចទេ, បើអត់ទេ ប្រើប្រាស់ onPressed ដែលបានបោះមកពី View
       onPressed: loading ? null : onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor ?? Colors.cyan,
-        foregroundColor: Colors.white,
+        backgroundColor: effectiveBg,
+        foregroundColor: effectiveFg,
+        disabledBackgroundColor: effectiveBg.withValues(alpha: 0.5),
         padding: const EdgeInsets.symmetric(vertical: 16.0),
-        elevation: 2,
+        elevation: 3,
+        shadowColor: effectiveBg.withValues(alpha: 0.4),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.circular(30.0),
         ),
       ),
       child: loading
-          ? const SizedBox(
-        height: 24,
-        width: 24,
-        child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5),
-      )
-          : Text(
-        label ?? '',
-        style: const TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 1.2,
-        ),
-      ),
+          ? SizedBox(
+              height: 22,
+              width: 22,
+              child: CircularProgressIndicator(
+                color: effectiveFg,
+                strokeWidth: 2.5,
+              ),
+            )
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (icon != null) ...[
+                  Icon(icon, size: 20, color: effectiveFg),
+                  const SizedBox(width: 8),
+                ],
+                Text(
+                  label ?? '',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 0.4,
+                    color: effectiveFg,
+                  ),
+                ),
+              ],
+            ),
     );
   }
 }
