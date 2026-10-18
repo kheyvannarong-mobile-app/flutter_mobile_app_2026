@@ -7,7 +7,7 @@ class ConstantUri {
   /// PC Local IP for Real Device: "192.168.1.6"
   /// For USB Cable with ADB reverse (`adb reverse tcp:30033 tcp:30033`): "127.0.0.1" or "localhost"
   /// For Android Emulator: "10.0.2.2"
-  static const String hostIp = "192.168.1.6";
+  static const String hostIp = "10.0.2.2";
   static const String port = "30033";
 
   static String get baseUri {
